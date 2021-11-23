@@ -33,17 +33,35 @@ app.get('/', (req, res) => {
 })
 
 app.get('/heroes', async (req, res) => {
-    try{
+    try {
         res.json(await Heroes.find({}))
-    }catch (error){
+    } catch (error) {
         res.status(400).json(error)
     }
 })
 
 app.post('/heroes', async (req, res) => {
-    try{
+    try {
         res.json(await Heroes.create(req.body))
-    }catch (error){
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
+app.put('/heroes/:id', async (req, res) => {
+    try {
+        res.json(
+            await Heroes.findByIdAndUpdate(req.params.id, req.body, { new:true })
+        )
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
+app.delete("/heroes/:id", async (req, res) => {
+    try {
+        res.json(await Heroes.findByIdAndRemove(req.params.id))
+    } catch (error) {
         res.status(400).json(error)
     }
 })
